@@ -1,0 +1,24 @@
+{{#if userName}}
+<div style="margin: 30vh auto; max-width: 30rem;">
+  <h2>Welcome back, {{userName}}!</h2>
+</div>
+
+{{else}}
+
+<div style="margin: 20vh auto; max-width: 20rem;">
+  <h1 class="mb-3">Account Login</h1>
+  <form action="/login" method="POST">
+    <div class="mb-3">
+      <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email"
+        value="{{#if email}}{{email}}{{/if}}">
+      {{#if errEmail}}<h6 style="color: #FF0000;">{{errEmail}}</h6>{{/if}}
+    </div>
+    <div class="mb-3">
+      <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+      {{#if errPassword}}<h6 style="color: #FF0000;">{{errPassword}}</h6>{{/if}}
+    </div>
+    <button type="submit" class="btn btn-outline-dark mt-4">Log in</button>
+  </form>
+</div>
+
+{{/if}}
