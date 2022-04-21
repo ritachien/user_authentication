@@ -1,6 +1,7 @@
 // Import modules and set relative variables
 const express = require('express')
 const hbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 3000
@@ -34,9 +35,34 @@ const users = [
   }
 ]
 
+// Set view Engine
+app.engine('handlebars', hbs.engine())
+app.set('view engine', 'handlebars')
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }))
+
 // Routes
 app.get('/', (req, res) => {
-  res.send('login practice')
+  res.render('index')
+})
+
+app.post('/login', (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  const emailExist = users.filter(user => user.email === email)
+
+  // user email is unique, filter got only 0/1 result
+  if (emailExist.length === 0) {
+    const errEmail = 'Invalid Email, please try again!'
+    res.render('index', { errEmail, email })
+  } else if (emailExist[0].password !== password) {
+    const errPassword = 'Invalid password, please try again!'
+    res.render('index', { errPassword, email })
+  } else {
+    const userName = emailExist[0].firstName
+    res.render('index', { userName })
+  }
 })
 
 // Listen the server
