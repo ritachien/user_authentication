@@ -2,6 +2,7 @@
 const express = require('express')
 const hbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 const Router = require('./routes')
 
@@ -16,6 +17,7 @@ app.set('view engine', 'handlebars')
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use(Router)
 
 // Listen the server

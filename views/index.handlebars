@@ -1,31 +1,20 @@
-{{#if userName}}
-{{!-- Success log in message --}}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Home</a>
+    {{#if user}}
+    <form class="d-flex" action="/logout" method="POST">
+      <button class="btn btn-outline-success" type="submit">Log out</button>
+    </form>
+    {{else}}
+    <a class="btn btn-outline-success" href="/login">Log in</a>
+    {{/if}}
+  </div>
+</nav>
+
 <div style="margin: 30vh auto; max-width: 30rem;">
-  <h2>Welcome back, {{userName}}!</h2>
+  {{!-- Success log in --}}
+  {{#if user}}<h2 class="text-center">Welcome back, {{user.firstName}}!</h2>
+  {{!-- Ask to log in --}}
+  {{else}} <h2 class="text-center">Please log in to continue!</h2>
+  {{/if}}
 </div>
-
-{{else}}
-
-<div style="margin: 20vh auto; max-width: 20rem;">
-  <h1 class="mb-3 text-center">Account Login</h1>
-  <form action="/login" method="POST">
-    <div class="mb-3">
-      {{!-- Leave error input of email if log in failed --}}
-      <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email"
-        value="{{#if email}}{{email}}{{/if}}">
-      {{!-- Show error message--}}
-      {{#if errEmail}}<h6 style="color: #FF0000;">{{errEmail}}</h6>{{/if}}
-    </div>
-    <div class="mb-3">
-      <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
-      {{!-- Show error message--}}
-      {{#if errPassword}}<h6 style="color: #FF0000;">{{errPassword}}</h6>{{/if}}
-    </div>
-    <div class="d-grid gap-1 col-4 mx-auto">
-      <button type="submit" class="btn btn-outline-dark mt-3 px-4 mx-auto">Log in</button>
-    </div>
-
-  </form>
-</div>
-
-{{/if}}
